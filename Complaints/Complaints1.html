@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محلولة - بوابة شكاوى محافظة دمشق</title>
+<link rel="stylesheet" href="comp.css?v12">
+<style>
+  /* ===== تحسين الراديو الرئيسي ===== */
+  .radio-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    background: #edebe0;
+    border-radius: 12px;
+    border: 3px solid #b8a678;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px; /* تم التصغير من 18px إلى 15px */
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: 0.3s;
+    border: 2px solid transparent;
+    color: #122510;
+  }
+  .radio-group label:hover {
+    background: #b8a67833;
+  }
+  .radio-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #054239;
+    cursor: pointer;
+  }
+  .radio-group label:has(input:checked) {
+    background: #054239;
+    color: #edebe0;
+    border-color: #b8a678;
+    box-shadow: 0 3px 10px rgba(5, 66, 57, 0.3);
+  }
+
+  /* ===== قائمة منسدلة للجهات ===== */
+  .entities-select-wrapper {
+    display: none;
+    margin-top: 10px;
+    width: 100%;
+  }
+  .entities-select-wrapper.show {
+    display: block;
+  }
+  .entities-select-wrapper select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #edebe0;
+    cursor: pointer;
+    text-align: right;
+    color: #122510;
+    border: 1px solid #b8a678;
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+    outline: none;
+  }
+  .entities-select-wrapper select:focus {
+    border-color: #054239;
+  }
+  .entities-select-wrapper select option {
+    background-color: #edebe0;
+    color: #122510;
+    padding: 8px;
+  }
+
+  /* ===== قائمة الشكاوى الخاصة بكل جهة ===== */
+  .complaints-list {
+    display: none;
+    margin-top: 10px;
+    padding-right: 15px;
+    border-right: 3px solid #b8a678;
+  }
+  .complaints-list.show {
+    display: block;
+  }
+  .complaints-list .space2 {
+    height: 35px;
+    display: flex;
+    align-items: center;
+  }
+  .complaints-list label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #122510;
+  }
+  .complaints-list input[type="radio"] {
+    accent-color: #054239;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+  .complaints-list .complaint-title {
+    font-weight: 600;
+    color: #054239;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  /* ===== القائمة الطويلة الأصلية ===== */
+  #defaultOptions .space2 {
+    height: 35px;
+    display: flex;
+    align-items: center;
+  }
+  #defaultOptions label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #122510;
+  }
+  #defaultOptions input[type="radio"] {
+    accent-color: #054239;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .radioheader legend {
+    font-weight: 600;
+    color: #122510;
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    .radio-group {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      padding: 10px;
+    }
+    .radio-group label {
+      font-size: 14px; /* تصغير إضافي للهاتف */
+      padding: 6px 12px;
+      justify-content: center;
+    }
+    .radio-group input[type="radio"] {
+      width: 16px;
+      height: 16px;
+    }
+  }
+</style>
+<script src="comp.js?v13" defer></script>
+
+</head>
+
+<body>
+  
+<div class="space"></div>
+<div class="headlogo"></div>
+<div class="space"></div>
+
+<div class="main">
+  
+  <div class="form">
+    <form id="complaintForm">
+
+      <!-- الهاتف -->
+      <div id="name1" class="inputs">
+          <input placeholder="رقم هاتف واتساب للتواصل" id="phone" type="tel" inputmode="numeric" pattern="[0-9]*" required autocomplete="off"
+		  oninvalid="this.setCustomValidity('يرجى إدخال رقم الهاتف')"
+		  oninput="this.setCustomValidity('')">
+          <p id="phoneError" style="color:#d93025; font-size:14px; display:none;">
+            الرجاء إدخال رقم الهاتف بشكل صحيح
+          </p>
+      </div>
+
+      <div class="space"></div>
+
+      <!-- ====== قسم الراديو المُعدّل ====== -->
+      <div id="about" class="radioheader">
+        <legend>الشكوى متعلقة بـ</legend>
+        <div class="space"></div>
+
+        <!-- راديو رئيسي: محافظة / جهات أخرى -->
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="mainCategory" value="governorate" checked> محافظة دمشق
+          </label>
+          <label>
+            <input type="radio" name="mainCategory" value="other" id="otherRadio"> جهات خارجية
+          </label>
+        </div>
+        <!-- قائمة منسدلة للجهات (تظهر عند اختيار "جهات خارجية") -->
+        <div class="entities-select-wrapper" id="entitiesSelectWrapper">
+          <select id="entitySelect">
+            <option value="">-- اختر الجهة --</option>
+            <option value="Interior">شكاوى متعلقة بالداخلية</option>
+            <option value="health">شكاوى متعلقة بالصحة</option>
+            <option value="Education">شكاوى متعلقة بالتعليم</option>
+            <option value="tourism">شكاوى متعلقة بالسياحة</option>
+            <option value="Supplies">شكاوى متعلقة بالتموين</option>
+            <option value="communication">شكاوى متعلقة بالاتصالات</option>
+          </select>
+        </div>
+
+        <!-- قائمة الشكاوى الخاصة بكل جهة (تظهر عند اختيار جهة) -->
+        <div class="complaints-list" id="complaintsList">
+          <div class="complaint-title" id="complaintTitle">شكاوى الكهرباء</div>
+          <div id="complaintsContainer"></div>
+        </div>
+
+        <!-- القائمة الطويلة الأصلية (تظهر فقط عند اختيار "محافظة") -->
+        <div id="defaultOptions" style="margin-top:5px;">
+          <div class="space2"><label><input type="radio" name="C" value="1"> إصلاحات شبكات مياه</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="2"> إصلاحات شبكات كهرباء</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="3"> إصلاحات طرق</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="4"> إصلاحات صرف صحي</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="5"> شكاوى متعلقة بهندسة المرور</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="6"> شكاوى متعلقة بالنقل</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="7"> شكاوى متعلقة بالنظافة</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="8"> شكاوى متعلقة بالحدائق</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="9"> مخالفات بناء</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="10"> إشغالات عامة</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="11"> شكاوى إدارية(فساد,مسلكية)</label></div>
+          <div class="space2"><label><input type="radio" name="C" value="12"> شكاوى مالية(معاملات،رسوم)</label></div>
+        </div>
+      </div>
+      <!-- ====== نهاية قسم الراديو ====== -->
+
+      <div class="space"></div>
+
+      <!-- موضوع الشكوى -->
+      <div id="name1" class="inputs">
+          <textarea placeholder="موضوع الشكوى" id="complaint" style="color: #727272;" required
+		  oninvalid="this.setCustomValidity('يرجى إدخال موضوع الشكوى')"
+		  oninput="this.setCustomValidity('')"></textarea>
+      </div>
+      
+      <div class="space"></div>
+           
+      <!-- العنوان -->
+      <div id="name1" class="inputs">
+          <input placeholder="عنوان موقع الشكوى مفصلاً مع علامة فارقة بالموقع" id="adress" type="text" required autocomplete="off"
+		  oninvalid="this.setCustomValidity('يرجى إدخال العنوان')"
+		  oninput="this.setCustomValidity('')">
+      </div>
+
+      <div class="space"></div>
+
+      <!-- صورة -->
+      <div class="inputs">
+          <div class="imgdiv">صورة متعلّقة بالشكوى (اختياري)</div>
+          <div class="space"></div>
+        <div class="file-input-wrapper">
+            <div class="file-input-label">
+                اختر صورة 📷
+                <input id="image" type="file" class="file-input" accept="image/*;capture=camera">
+            </div>
+            <div class="file-info">
+                <span class="file-name" id="imageName"></span>
+                <span class="file-size" id="imageSize"></span>
+            </div>
+            <div class="file-preview" id="imagePreview">
+                <img class="preview-image" id="imagePreviewImg" src="" alt="Preview">
+            </div>
+        </div>
+      </div>
+
+      <div class="space"></div>
+
+      <!-- فيديو -->
+      <div class="inputs">
+        <div class="viddiv">فيديو متعلّق بالشكوى (اختياري)</div>
+        <div class="space"></div>
+        <div class="file-input-wrapper">
+            <div class="file-input-label">
+                اختر فيديو 🎬
+                <input id="video" type="file" class="file-input" accept="video/*;capture=camera">
+            </div>
+            <div class="file-info">
+                <span class="file-name" id="videoName"></span>
+                <span class="file-size" id="videoSize"></span>
+            </div>
+            <div class="video-warning" id="videoWarning"></div>
+            <div class="file-preview" id="videoPreview">
+                <video class="preview-video" id="videoPreviewPlayer" controls></video>
+            </div>
+        </div>
+      </div>
+
+      <div class="progress-container" id="progressContainer">
+          <div id="uploadItems"></div>
+      </div>
+
+      <div class="space"></div>
+
+
+      <div class="accept">
+        البيانات الواردة في الشكوى صحيحة وأنا مسؤول عنها
+      </div>
+
+      <div class="space"></div>
+
+      <input type="submit" id="send" value="إرسال">
+
+    </form>
+
+    <div id="flashMessage" class="flash-message" style="display:none">
+      تم إرسال الشكوى بنجاح
+    </div>
+
+  </div>
+
+</div>
+<div class="space"></div>
+
+<script>
+  (function() {
+    // عناصر الراديو
+    const otherRadio = document.getElementById('otherRadio');
+    const govRadio = document.querySelector('input[name="mainCategory"][value="governorate"]');
+    const entitiesSelectWrapper = document.getElementById('entitiesSelectWrapper');
+    const entitySelect = document.getElementById('entitySelect');
+    const complaintsList = document.getElementById('complaintsList');
+    const defaultOptions = document.getElementById('defaultOptions');
+    const complaintsContainer = document.getElementById('complaintsContainer');
+    const complaintTitle = document.getElementById('complaintTitle');
+
+			
+    // بيانات الشكاوى لكل جهة
+    const complaintsData = {
+      Interior: {
+        title: '',
+        items: ['شكوى على عنصر أمن' ]
+      },
+      health: {
+        title: '',
+        items: ['سوء الخدمات في المشافي','انتظار طويل في العيادات','عدم توفر أطباء اختصاصيين','رداءة الخدمات الصحية','أخطاء طبية']
+      },
+      Education: {
+        title: '',
+        items: ['رداءة جودة التعليم','نقص الكوادر التعليمية','سوء البنية التحتية للمدارس','زيادة الكثافة الصفية','غياب الوسائل التعليمية','مشاكل في المناهج الدراسية']
+      },
+      tourism: {
+        title: '',
+        items: ['سوء خدمات الفنادق','إهمال المواقع الأثرية','نقص الخدمات السياحية','رداءة المطاعم السياحية','قلة المرشدين السياحيين']
+      },
+      Supplies: {
+        title: '',
+        items: ['ارتفاع الأسعار غير المبرر','نقص السلع الغذائية','رداءة جودة المواد الغذائية','غش تجاري وتلاعب بالأسعار','أزمة الخبز والمازوت','التلاعب ببطاقات التموين']
+      },
+      communication: {
+        title: '',
+        items: ['ضعف خدمة الإنترنت','انقطاع خدمات الاتصالات','فواتير مرتفعة','رداءة خدمة العملاء','مشاكل في التغطية','بطء في سرعة الإنترنت']
+      }
+    
+    };
+
+    function toggleCategories() {
+      if (otherRadio.checked) {
+        defaultOptions.style.display = 'none';
+        entitiesSelectWrapper.classList.add('show');
+        entitiesSelectWrapper.style.display = 'block';
+        complaintsList.classList.remove('show');
+        complaintsList.style.display = 'none';
+        document.querySelectorAll('input[name="C"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[name="entityComplaint"]').forEach(r => r.checked = false);
+        entitySelect.value = '';
+      } else {
+        defaultOptions.style.display = 'block';
+        entitiesSelectWrapper.classList.remove('show');
+        entitiesSelectWrapper.style.display = 'none';
+        complaintsList.classList.remove('show');
+        complaintsList.style.display = 'none';
+        document.querySelectorAll('input[name="entityComplaint"]').forEach(r => r.checked = false);
+        entitySelect.value = '';
+      }
+    }
+
+    entitySelect.addEventListener('change', function() {
+      const entityKey = this.value;
+      
+      if (entityKey) {
+        const data = complaintsData[entityKey];
+        
+        if (data) {
+          document.querySelectorAll('input[name="C"]').forEach(r => r.checked = false);
+          
+          complaintTitle.textContent = data.title;
+          
+          complaintsContainer.innerHTML = '';
+          data.items.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'space2';
+            div.innerHTML = `
+              <label>
+                <input type="radio" name="entityComplaint" value="${entityKey}_${index}">
+                ${item}
+              </label>
+            `;
+            complaintsContainer.appendChild(div);
+          });
+          
+          complaintsList.style.display = 'block';
+          complaintsList.classList.add('show');
+        }
+      } else {
+        complaintsList.classList.remove('show');
+        complaintsList.style.display = 'none';
+        document.querySelectorAll('input[name="entityComplaint"]').forEach(r => r.checked = false);
+      }
+    });
+
+    document.addEventListener('change', function(e) {
+      if (e.target && e.target.name === 'entityComplaint') {
+        document.querySelectorAll('input[name="C"]').forEach(r => r.checked = false);
+      }
+      if (e.target && e.target.name === 'C') {
+        document.querySelectorAll('input[name="entityComplaint"]').forEach(r => r.checked = false);
+      }
+    });
+
+    document.querySelectorAll('input[name="mainCategory"]').forEach(radio => {
+      radio.addEventListener('change', toggleCategories);
+    });
+
+    toggleCategories();
+
+    const adviceBtn = document.getElementById('addAdviceBtn');
+    const adviceContainer = document.getElementById('adviceFieldContainer');
+    adviceBtn.addEventListener('click', function() {
+      if (adviceContainer.style.display === 'none') {
+        adviceContainer.style.display = 'block';
+        adviceBtn.textContent = 'إخفاء التوصية';
+      } else {
+        adviceContainer.style.display = 'none';
+        adviceBtn.textContent = 'اكتب توصية أو نصيحة';
+      }
+    });
+
+  })();
+</script>
+
+</body>
+</html>

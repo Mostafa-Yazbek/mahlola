@@ -1,0 +1,516 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* يمنع مشاكل العرض في الهاتف */
+}
+
+
+body{
+   
+    background-image: linear-gradient(to bottom, #054239);
+    min-height: 100vh;  /* مهم للهاتف */
+}
+
+@font-face {
+	font-family: 'SyFamily';
+	src: url('./fonts/itfQomraArabic-Medium.woff2') format('woff2');
+}
+
+* {
+	font-family: SyFamily;
+}
+
+
+.headlogo{
+   
+    background-image: url("img/head2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:contain;
+    height: 40vh;
+    width: 100%; 
+}
+
+
+.main {
+
+  background-image: url("img/texture3.png");
+  background-repeat:repeat;
+  background-size: 70%;
+  position: relative;
+  background-color: #edebe0;
+  width: 65%;
+  height: 100%;
+  margin: auto;
+  padding: 40px;
+  border-radius: 40px;
+  background-position: center;
+  overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 10px 15px 8px 5px rgba(0, 0, 0, 0.958);
+   border-top: #b8a678 10px solid;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    position: relative;
+    z-index: 3;
+}
+.main::before {
+    
+ 
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #edebe0af;  /*درجة الشفافية */
+  z-index: 2;
+  border-radius: 40px;
+  
+  
+} 
+
+
+/* جعل كل محتوى main فوق الطبقة */
+.main > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* نص العنوان */
+
+/* ============================= */
+/* الفورم */
+/* ============================= */
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #122510;
+    text-align: right;
+    width: 100%;
+}
+
+/* مجموعة الحقول */
+.inputs{
+    width: 30vw; /* مناسب للديسكتوب */
+    outline: none;
+
+}
+/*عنوان ليست*/
+.complaint-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #edebe0;
+  cursor: pointer;
+}
+
+.complaint-select:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+/* عنوان الراديو */
+.radioheader{
+    color: #727272; 
+    text-align: right;
+    width: 30vw;
+}
+
+/* الحقول النصية */
+
+
+
+
+/* زر الإرسال */
+#send{
+    margin: 15px auto;
+    color: #000;
+    width: 160px;
+    height: 48px;
+    border: 1px solid #edebe0;
+    font-size: 14px;
+    display: block;
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+	border-radius: 8px;
+}
+
+.btn{
+    margin: 15px 15px;
+    color: #000;
+    width: 160px;
+    height: 48px;
+    border: 1px solid #edebe0;
+    font-size: 14px;
+    display: block;
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+	border-radius: 8px;
+}
+.btn:hover{
+    background-color: #b8a678;
+}
+
+#complaintType {
+	width: 100%;
+	padding: 12px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-family: inherit;
+	background-color: #edebe0;
+	cursor: pointer;
+	text-align: right;
+	margin-bottom: 10px;
+	color: #727272;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+}
+
+/* مسافة بين العناصر */
+.space{
+    height: 20px;
+}
+
+.space2{
+    height: 35px;
+}
+
+/* ============================= */
+/* رسالة التنبيه (Flash Message) */
+/* ============================= */
+#flashMessage {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #edebe0;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 8px;
+  display: none;        /* مخفية افتراضياً */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 9999;
+  max-width: 90%;
+  text-align: center;
+}
+
+/* عند الإظهار */
+#flashMessage.show {
+  display: block;
+  opacity: 1;
+}
+
+/* نص القبول */
+.accept p{
+    padding: 10px;
+	font-size: 20px;
+	 color: #727272;
+}
+#location{
+    display: grid;
+    justify-content:space-between;
+    align-items: center;
+}
+#name1 input{
+    width: 100%;
+    height: 60px;
+    padding: 15px;
+    background-color: #edebe0;
+    border-radius: 8px;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+    text-align: right;
+    font-size: 14px;
+    outline: none;
+    color: #122510;
+} 
+
+#complaint{
+     width: 100%;
+    height: 100px;
+    padding: 15px;
+    background-color: #edebe0;
+    border-radius: 8px;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+    font-size: 14px;
+    text-align: right;
+    outline: none;
+}
+
+.imgdiv, .viddiv{
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+    padding: 15px;
+    height: 50px;
+    background-color: #b8a678;
+	font-size: 14px;
+    border-radius: 8px;
+    color: #ffffff;
+    background-image: linear-gradient(to right, #0000003f, transparent);
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+}
+
+#addAdviceBtn {
+	padding: 12px;
+	background-color: #b8a678;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 14px;
+	color: white;
+	cursor: pointer;
+	font-family: inherit;
+	box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+}
+
+input:focus{
+
+    transform: scale(1.02);
+}
+
+
+@media (max-width: 768px) {
+
+    /* تعديل تموضع الصفحة */
+    body{
+        align-items: flex-start;
+    }
+
+    /* جعل المحتوى بعرض الشاشة */
+    .main{
+        width: 80%;
+        
+    }
+
+    /* تكبير الشعار على الهاتف */
+    .headlogo{
+        width: 100%;
+
+    }
+    /* ترتيب الفورم عمودياً */
+    .form{
+        flex-direction: column;
+    }
+
+    /* جعل الحقول بعرض الشاشة */
+    .inputs,
+    .radioheader{
+        width: 100%;
+    }
+
+    /* تحسين حجم النص واللمس */
+    .inputs input{
+        font-size: 14px;
+        padding: 14px;
+    }
+
+    /* زر الإرسال بعرض كامل */
+    #send{
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .btn{
+        height: 50px;
+        font-size: 14px;
+    }
+
+    /* توسيط رسالة التنبيه في الهاتف */
+    #flashMessage{
+        right: 50%;
+        transform: translateX(50%);
+        top: 15px;
+    }
+}
+#send:hover{
+    background-color: #b8a678;
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 100%;
+    padding: 15px;
+  }
+}
+/*complaint*/
+#complaintType option {
+  background-color: #edebe0;
+  color: #727272; 
+  padding: 12px;
+  font-size: 14px;
+}
+
+#complaintType:focus {
+  outline: none;
+  border-color: #b8a678;
+}
+#complaintType:selected{
+    background-color: #b8a678;
+}
+select option{
+	max-width:100%;
+}
+select option:hover {
+    box-shadow: 0 0 10px 100px #ff0000 inset !important; /* Red background on hover */
+    color: white; /* Change text color for better contrast */
+}
+select option:checked {
+    box-shadow: 0 0 10px 100px #00ff00 inset !important; /* Blue background if selected */
+    color: white;
+}
+
+#advice{
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    background-color: #edebe0;
+    border-radius: 8px;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.358);
+    font-size: 14px;
+    text-align: right;
+    outline: none;
+}
+
+.progress-container {
+	display: none;
+	margin-top: 30px;
+}
+
+.upload-item {
+	background: #f7fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 15px;
+}
+
+.upload-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.upload-name {
+	font-weight: 600;
+	color: #2d3748;
+}
+
+.upload-percent {
+	font-weight: 600;
+	color: #b8a678;
+}
+
+.progress-bar {
+	height: 10px;
+	background: #e2e8f0;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 10px 0;
+}
+
+.progress-fill {
+	height: 100%;
+	background: linear-gradient(90deg, #727272, #b8a678);
+	width: 0%;
+	transition: width 0.3s ease;
+	border-radius: 5px;
+}
+
+.upload-details {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	color: #718096;
+}
+
+.upload-speed {
+	font-weight: 600;
+	color: #b8a678;
+}
+
+.upload-status {
+	display: none;
+	padding: 20px;
+	background: #f0fff4;
+	border: 1px solid #c6f6d5;
+	border-radius: 10px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+input:not(:placeholder-shown),
+textarea:not(:placeholder-shown),
+select:valid {
+    border-top: #054239 6px solid;
+}
+
+input:placeholder-shown,
+textarea:placeholder-shown,
+select:not(:valid) {
+    border-top: #b8a678 6px solid;
+}
+
+.file-input-wrapper {
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.file-input {
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.file-input-label {
+	display: inline-block;
+	padding: 6px 12px;
+	border: 2px dashed #05423922;
+	border-radius: 10px;
+	cursor: pointer;
+	text-align: center;
+	transition: all 0.3s;
+}
+
+.file-input-label:hover {
+	background: #b8a678;
+	border-color: #054239;
+}
+
+.file-preview {
+	display: none;
+	margin-top: 20px;
+}
+
+.preview-image {
+	max-width: 200px;
+	max-height: 150px;
+	border-radius: 8px;
+	object-fit: cover;
+	margin-right: 15px;
+}
+
+.preview-video {
+	max-width: 200px;
+	max-height: 150px;
+	border-radius: 8px;
+	background: #000;
+}
