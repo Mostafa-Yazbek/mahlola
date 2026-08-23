@@ -117,15 +117,21 @@
     margin-bottom: 5px;
   }
 
-  /* ===== القائمة الطويلة الأصلية ===== */
-  #defaultOptions {
-    display: none;
-  }
-  #defaultOptions .space2 {
-    height: 35px;
-    display: flex;
-    align-items: center;
-  }
+#defaultOptions {
+  display: grid;
+  margin-top: 5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(6, 35px);
+  grid-auto-flow: column;
+  column-gap: 30px;
+}
+
+#defaultOptions .space2 {
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
   #defaultOptions label {
     display: flex;
     align-items: center;
@@ -150,10 +156,11 @@
   }
 
   /* أخفاء الأقسام تدريجياً لضبط التسلسل */
-  .step-card {
-    display: none;
-    animation: fadeIn 0.4s ease-in-out forwards;
-  }
+.step-card {
+  display: block;
+  animation: fadeIn 0.4s ease-in-out forwards;
+}
+
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
@@ -213,7 +220,8 @@
         <!-- راديو رئيسي: غير محدد افتراضياً -->
         <div class="radio-group">
           <label>
-            <input type="radio" name="mainCategory" value="governorate" id="govRadio"> محافظة دمشق
+<input type="radio" name="mainCategory" value="governorate" id="govRadio" checked> محافظة دمشق
+
           </label>
           <label>
             <input type="radio" name="mainCategory" value="other" id="otherRadio"> جهات خارجية
@@ -396,7 +404,7 @@
         complaintsList.classList.remove('show');
         complaintsList.style.display = 'none';
       } else if (govRadio.checked) {
-        defaultOptions.style.display = 'block';
+        defaultOptions.style.display = 'grid';
         entitiesSelectWrapper.classList.remove('show');
         entitiesSelectWrapper.style.display = 'none';
         complaintsList.classList.remove('show');
@@ -431,38 +439,36 @@
       checkFlowProgress();
     });
 
-    // متابعة إدخال الشكوى والعنوان لإظهار الكروت بالتسلسل
-    function checkFlowProgress() {
-      const isSelected = document.querySelector('input[name="C"]:checked') || document.querySelector('input[name="entityComplaint"]:checked');
-      
-      if (isSelected) {
-        subjectCard.style.display = 'block';
-      } else {
-        subjectCard.style.display = 'none';
-        addressCard.style.display = 'none';
-        mediaCard.style.display = 'none';
-        return;
-      }
+function checkFlowProgress() {
+  // تبقى الحقول الأساسية ظاهرة دائماً
+  subjectCard.style.display = 'block';
+  addressCard.style.display = 'block';
 
-      if (complaintInput.value.trim() !== '') {
-        addressCard.style.display = 'block';
-      } else {
-        addressCard.style.display = 'none';
-        mediaCard.style.display = 'none';
-        return;
-      }
+  const selectedComplaint = document.querySelector('input[name="C"]:checked');
 
-      if (adressInput.value.trim() !== '') {
-        mediaCard.style.display = 'block';
-      } else {
-        mediaCard.style.display = 'none';
-      }
+  // الشكوى الإدارية: لا تظهر مرفقات نهائياً
+  if (selectedComplaint && selectedComplaint.value === '11') {
+    mediaCard.style.display = 'none';
+
+    // يمسح أي صورة أو فيديو كان المستخدم اختاره مسبقاً
+    if (window.clearComplaintMedia) {
+      window.clearComplaintMedia();
     }
+    return;
+  }
 
-    complaintInput.addEventListener('input', checkFlowProgress);
-    adressInput.addEventListener('input', checkFlowProgress);
+  // كل الأنواع الأخرى: تظهر المرفقات
+  mediaCard.style.display = 'block';
 
-    // ===== إعدادات الصور والمستندات بـ بدون أيقونات =====
+  // الشكوى المالية: يتحول حقل الصورة إلى وثيقة أو وصل
+  if (selectedComplaint && selectedComplaint.value === '12') {
+    setImageMode(true);
+  } else {
+    setImageMode(false);
+  }
+}
+
+
     const imageLabelText = document.getElementById('imageLabelText');
     const imageBtnText = document.getElementById('imageBtnText');
 
@@ -500,6 +506,7 @@
     document.querySelectorAll('input[name="mainCategory"]').forEach(radio => {
       radio.addEventListener('change', toggleCategories);
     });
+checkFlowProgress();
 
   })();
 </script>

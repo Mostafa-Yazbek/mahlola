@@ -184,6 +184,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let selectedVideo = null;
+    window.clearComplaintMedia = function () {
+  selectedImage = null;
+  selectedVideo = null;
+
+  imageInput.value = '';
+  videoInput.value = '';
+
+  imageName.textContent = '';
+  imageSize.textContent = '';
+  videoName.textContent = '';
+  videoSize.textContent = '';
+
+  imagePreview.style.display = 'none';
+  videoPreview.style.display = 'none';
+  videoPreviewPlayer.removeAttribute('src');
+};
+
     async function handleVideoSelect(event) {
         const file = event.target.files[0];
         if (!file || !file.type.startsWith('video/')) {
