@@ -947,8 +947,38 @@ body.success-modal-open {
 .service-intro-text {
     margin: 0;
     color: #555;
+}.service-intro {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-bottom: 20px;
+    padding: 14px 18px;
+
+    background: #edebe0;
+    border-right: 4px solid #b8a678;
+    border-radius: 10px;
+
+    direction: rtl;
+    text-align: right;
+
+    color: #122510;
+    font-size: 14px;
+    line-height: 1.9;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.service-intro-title {
+    color: #054239;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.service-intro p {
+    margin: 0;
+    color: #555;
+}
 </style>
 <script src="comp.js?v13" defer></script>
 
@@ -961,14 +991,10 @@ body.success-modal-open {
 <div class="space"></div>
 
 <div class="main">
-  
-  <div class="form">
-    <form id="complaintForm">
-<!-- تعريف الخدمة -->
 <div class="service-intro">
 
     <div class="service-intro-title">
-         خدمة محلولة
+        عن خدمة محلولة
     </div>
 
     <p class="service-intro-text">
@@ -977,6 +1003,8 @@ body.success-modal-open {
     </p>
 
 </div>
+  <div class="form">
+    <form id="complaintForm">
       <!-- الهاتف -->
 <div id="name1" class="inputs">
 
