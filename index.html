@@ -1677,18 +1677,18 @@ verifyOtpBtn.addEventListener('click', function () {
         .join('');
 
 
-    /* -------------------------
-       تنظيف الخطأ
-    ------------------------- */
+    /* =========================
+       تنظيف الخطأ السابق
+    ========================= */
 
     otpError.textContent = '';
     otpError.style.display = 'none';
     otpError.classList.remove('show');
 
 
-    /* -------------------------
+    /* =========================
        التحقق من طول OTP
-    ------------------------- */
+    ========================= */
 
     if (otp.length !== 6) {
 
@@ -1702,8 +1702,15 @@ verifyOtpBtn.addEventListener('click', function () {
     }
 
 
+    /* =========================
+       OTP تجريبي مؤقت
+    ========================= */
+
+    const testOtp = '123456';
+
+
     /*
-     * لاحقاً:
+     * لاحقاً سيتم استبدال هذا الجزء بـ API
      *
      * POST /api/verify-otp
      *
@@ -1713,45 +1720,96 @@ verifyOtpBtn.addEventListener('click', function () {
      * }
      */
 
-    console.log('Verify OTP:', otp);
+
+    /* =========================
+       OTP غير صحيح
+    ========================= */
+
+    if (otp !== testOtp) {
+
+        otpError.textContent =
+            'رمز التحقق غير صحيح، يرجى المحاولة مرة أخرى';
+
+        otpError.style.display = 'block';
+        otpError.classList.add('show');
 
 
-    /* -------------------------
-       مؤقتاً نعتبر التحقق ناجح
-    ------------------------- */
+        /*
+         * مسح الخانات
+         */
+
+        otpInputs.forEach(input => {
+            input.value = '';
+        });
+
+
+        /*
+         * العودة لأول خانة
+         */
+
+        otpInputs[0].focus();
+
+
+        return;
+    }
+
+
+    /* =========================
+       OTP صحيح
+    ========================= */
 
     otpVerified = true;
 
 
-    /* -------------------------
-       تحديث الواجهة
-    ------------------------- */
-
-    otpError.textContent = '';
-    otpError.style.display = 'none';
-
-    verifyOtpBtn.textContent = 'تم تأكيد الرقم';
-    verifyOtpBtn.disabled = true;
-
+    /*
+     * تعطيل الخانات
+     */
 
     otpInputs.forEach(input => {
         input.disabled = true;
     });
 
 
-    /* -------------------------
-       إغلاق الـ Modal
-    ------------------------- */
+    /*
+     * تغيير زر التحقق
+     */
+
+    verifyOtpBtn.textContent =
+        'تم التحقق بنجاح ✓';
+
+    verifyOtpBtn.disabled = true;
+
+
+    /*
+     * رسالة النجاح
+     */
+
+    otpError.textContent =
+        'تم التحقق من رقم الهاتف بنجاح';
+
+    otpError.style.color = '#054239';
+    otpError.style.display = 'block';
+    otpError.classList.add('show');
+
+
+    /*
+     * إغلاق النافذة بعد فترة قصيرة
+     */
 
     setTimeout(() => {
 
         closeOtpModal();
 
-    }, 700);
+        /*
+         * إعادة لون رسالة الخطأ
+         * حتى لا تبقى خضراء عند فتح OTP مرة ثانية
+         */
+
+        otpError.style.color = '';
+
+    }, 1200);
 
 });
-
-
 /* =========================
    إعادة إرسال OTP
 ========================= */
