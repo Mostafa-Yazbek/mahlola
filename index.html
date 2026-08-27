@@ -198,28 +198,6 @@
   flex: 1;
 }
 
-#confirmPhoneBtn {
-  min-width: 120px;
-  border: 0;
-  border-radius: 8px;
-  background: #054239;
-  color: #edebe0;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0 18px;
-  transition: 0.2s;
-}
-
-#confirmPhoneBtn:hover {
-  background: #07372f;
-}
-
-#confirmPhoneBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
 /* =========================================
    OTP MODAL - FINAL
 ========================================= */
@@ -979,30 +957,289 @@ body.success-modal-open {
     margin: 0;
     color: #555;
 }
+
+/* =========================================
+   SERVICE INTRO MODAL
+========================================= */
+
+.service-intro-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: transparent;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+/* =========================================
+   إخفاء الكارت
+========================================= */
+
+.service-intro-modal.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+/* =========================================
+   الخلفية
+========================================= */
+
+.service-intro-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(5, 25, 20, 0.48);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* =========================================
+   الكارت
+========================================= */
+
+.service-intro-panel {
+    position: relative;
+    z-index: 2;
+
+    width: min(500px, 100%);
+
+    padding: 35px 25px;
+
+    background: #edebe0;
+
+    border: 2px solid #b8a678;
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.28),
+        0 5px 20px rgba(0, 0, 0, 0.12);
+
+    text-align: center;
+
+    transform: translateY(0) scale(1);
+
+    animation: serviceIntroAppear 0.3s ease;
+}
+
+
+/* =========================================
+   حركة ظهور الكارت
+========================================= */
+
+@keyframes serviceIntroAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================
+   الأيقونة
+========================================= */
+
+.service-intro-icon {
+
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #054239;
+    color: #edebe0;
+
+    border: 3px solid #b8a678;
+
+    font-size: 30px;
+    font-weight: 700;
+
+}
+
+
+/* =========================================
+   العنوان
+========================================= */
+
+.service-intro-title {
+
+    color: #054239;
+
+    font-size: 23px;
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =========================================
+   الوصف
+========================================= */
+
+.service-intro-text {
+
+    margin: 0 0 24px;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================================
+   زر المتابعة
+========================================= */
+
+.service-intro-btn {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 12px 16px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #054239;
+    color: #edebe0;
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.service-intro-btn:hover {
+
+    background: #032d27;
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================
+   منع Scroll عند ظهور الرسالة
+========================================= */
+
+body.service-intro-open {
+    overflow: hidden;
+}
+
+
+/* =========================================
+   موبايل
+========================================= */
+
+@media (max-width: 600px) {
+
+    .service-intro-modal {
+        padding: 15px;
+    }
+
+    .service-intro-panel {
+        width: 100%;
+        padding: 30px 18px;
+        border-radius: 16px;
+    }
+
+    .service-intro-title {
+        font-size: 20px;
+    }
+
+    .service-intro-text {
+        font-size: 13px;
+    }
+
+}
+
 </style>
 <script src="comp.js?v13" defer></script>
 
 </head>
 
 <body>
-  
+  <!-- ================= SERVICE INTRO MODAL ================= -->
+
+<div id="serviceIntroModal" class="service-intro-modal">
+
+    <div class="service-intro-backdrop"></div>
+
+    <div class="service-intro-panel">
+
+        <div class="service-intro-icon">
+            !
+        </div>
+
+        <div class="service-intro-title">
+            عن خدمة محلولة
+        </div>
+
+        <p class="service-intro-text">
+            تتيح لك خدمة محلولة تقديم شكوى إلى محافظة دمشق أو الجهات المختصة،
+            مع إمكانية إرفاق الصور والفيديو ومتابعة الشكوى إلكترونياً.
+        </p>
+
+        <button
+            type="button"
+            id="startComplaintBtn"
+            class="service-intro-btn">
+            متابعة
+        </button>
+
+    </div>
+
+</div>
+
 <div class="space"></div>
 <div class="headlogo"></div>
 <div class="space"></div>
 
 <div class="main">
-<div class="service-intro">
 
-    <div class="service-intro-title">
-        عن خدمة محلولة
-    </div>
-
-    <p class="service-intro-text">
-        تتيح لك خدمة محلولة تقديم شكوى إلى محافظة دمشق أو الجهات المختصة،
-        مع إمكانية إرفاق الصور والفيديو ومتابعة الشكوى إلكترونياً.
-    </p>
-
-</div>
   <div class="form">
     <form id="complaintForm">
       <!-- الهاتف -->
@@ -1021,10 +1258,6 @@ body.success-modal-open {
             oninvalid="this.setCustomValidity('يرجى إدخال رقم الهاتف')"
             oninput="this.setCustomValidity('')"
         >
-
-        <button type="button" id="confirmPhoneBtn">
-            تأكيد الرقم
-        </button>
 
     </div>
 
@@ -1171,6 +1404,7 @@ body.success-modal-open {
 
     </form>
 <!-- ================= SUCCESS MODAL ================= -->
+
 
 <div id="successModal" class="success-modal" hidden>
 
@@ -1428,7 +1662,6 @@ checkFlowProgress();
 
 const phoneInput = document.getElementById('phone');
 const phoneError = document.getElementById('phoneError');
-const confirmPhoneBtn = document.getElementById('confirmPhoneBtn');
 
 const otpModal = document.getElementById('otpModal');
 const otpModalBackdrop = document.getElementById('otpModalBackdrop');
@@ -1444,7 +1677,26 @@ const otpTimer = document.getElementById('otpTimer');
 
 let otpVerified = false;
 let otpCountdown = null;
+/* =========================
+   SERVICE INTRO MODAL
+========================= */
 
+const serviceIntroModal =
+    document.getElementById('serviceIntroModal');
+
+const startComplaintBtn =
+    document.getElementById('startComplaintBtn');
+
+document.body.classList.add('service-intro-open');
+
+
+startComplaintBtn.addEventListener('click', function () {
+
+    serviceIntroModal.classList.add('hide');
+
+    document.body.classList.remove('service-intro-open');
+
+});
 
 /* =========================
    فتح OTP Modal
@@ -1517,12 +1769,7 @@ function closeOtpModal() {
 
 otpCloseBtn.addEventListener('click', function () {
 
-    // إذا لم يتم التحقق من الرقم
-    // نعيد السماح بتعديل الهاتف
-    if (!otpVerified) {
-        phoneInput.disabled = false;
-        confirmPhoneBtn.disabled = false;
-    }
+
 
     closeOtpModal();
 });
@@ -1533,11 +1780,6 @@ otpCloseBtn.addEventListener('click', function () {
 ========================= */
 
 otpModalBackdrop.addEventListener('click', function () {
-
-    if (!otpVerified) {
-        phoneInput.disabled = false;
-        confirmPhoneBtn.disabled = false;
-    }
 
     closeOtpModal();
 });
@@ -1554,76 +1796,11 @@ document.addEventListener('keydown', function (event) {
         !otpModal.hidden &&
         otpModal.classList.contains('show')
     ) {
-
-        if (!otpVerified) {
-            phoneInput.disabled = false;
-            confirmPhoneBtn.disabled = false;
-        }
-
         closeOtpModal();
     }
 
 });
 
-
-/* =========================
-   تأكيد رقم الهاتف
-========================= */
-
-confirmPhoneBtn.addEventListener('click', function () {
-
-    const phone = phoneInput.value.trim();
-
-    /* -------------------------
-       التحقق من الرقم
-    ------------------------- */
-
-    if (!phone || phone.length < 9) {
-
-        phoneError.textContent =
-            'الرجاء إدخال رقم الهاتف بشكل صحيح';
-
-        phoneError.style.display = 'block';
-
-        phoneInput.focus();
-
-        return;
-    }
-
-    /* -------------------------
-       الرقم صحيح
-    ------------------------- */
-
-    phoneError.style.display = 'none';
-
-    /*
-     * لاحقاً:
-     *
-     * POST /api/send-otp
-     *
-     * {
-     *     phone: phone
-     * }
-     */
-
-    console.log('Send OTP to:', phone);
-
-
-    /* -------------------------
-       منع تعديل الرقم
-    ------------------------- */
-
-    phoneInput.disabled = true;
-    confirmPhoneBtn.disabled = true;
-
-
-    /* -------------------------
-       فتح نافذة OTP
-    ------------------------- */
-
-    openOtpModal();
-
-});
 
 
 /* =========================
@@ -1825,60 +2002,57 @@ verifyOtpBtn.addEventListener('click', function () {
     }
 
 
-    /* =========================
-       OTP صحيح
-    ========================= */
+  /* =========================
+   OTP صحيح
+========================= */
 
-    otpVerified = true;
-
-
-    /*
-     * تعطيل الخانات
-     */
-
-    otpInputs.forEach(input => {
-        input.disabled = true;
-    });
+otpVerified = true;
 
 
-    /*
-     * تغيير زر التحقق
-     */
+/*
+ * تعطيل الخانات
+ */
 
-    verifyOtpBtn.textContent =
-        'تم التحقق بنجاح ✓';
-
-    verifyOtpBtn.disabled = true;
-
-
-    /*
-     * رسالة النجاح
-     */
-
-    otpError.textContent =
-        'تم التحقق من رقم الهاتف بنجاح';
-
-    otpError.style.color = '#054239';
-    otpError.style.display = 'block';
-    otpError.classList.add('show');
+otpInputs.forEach(input => {
+    input.disabled = true;
+});
 
 
-    /*
-     * إغلاق النافذة بعد فترة قصيرة
-     */
+/*
+ * تغيير زر التحقق
+ */
 
-    setTimeout(() => {
+verifyOtpBtn.textContent =
+    'تم التحقق بنجاح ✓';
 
-        closeOtpModal();
+verifyOtpBtn.disabled = true;
 
-        /*
-         * إعادة لون رسالة الخطأ
-         * حتى لا تبقى خضراء عند فتح OTP مرة ثانية
-         */
 
-        otpError.style.color = '';
+/*
+ * رسالة النجاح
+ */
 
-    }, 1200);
+otpError.textContent =
+    'تم التحقق من رقم الهاتف بنجاح';
+
+otpError.style.color = '#054239';
+otpError.style.display = 'block';
+otpError.classList.add('show');
+
+
+/*
+ * إغلاق OTP ثم إرسال الشكوى
+ */
+
+setTimeout(() => {
+
+    closeOtpModal();
+
+    otpError.style.color = '';
+
+    submitComplaintAfterOtp();
+
+}, 1000);
 
 });
 /* =========================
@@ -1980,6 +2154,37 @@ function startOtpTimer(seconds) {
     }, 1000);
 
 }
+/* =========================
+   إرسال الشكوى بعد نجاح OTP
+========================= */
+
+function submitComplaintAfterOtp() {
+
+    const sendButton =
+        document.getElementById('send');
+
+    sendButton.disabled = true;
+    sendButton.value = 'جاري الإرسال...';
+
+
+    /*
+     * هنا لاحقاً تضع API إرسال الشكوى
+     *
+     * POST /api/complaints
+     *
+     * بعد نجاح الـ API:
+     * showComplaintSuccess();
+     */
+
+
+    setTimeout(function () {
+
+        showComplaintSuccess();
+
+    }, 1200);
+
+}
+
 /* =========================
    COMPLAINT SUCCESS MODAL
 ========================= */
@@ -2088,7 +2293,6 @@ function resetComplaintForm() {
 
     phoneInput.disabled = false;
 
-    confirmPhoneBtn.disabled = false;
 
     phoneError.style.display = 'none';
 
@@ -2245,14 +2449,26 @@ complaintForm.addEventListener('submit', function(event) {
 
     event.preventDefault();
 
-    // =========================
-    // التحقق من رقم الهاتف
-    // =========================
 
-    if (!otpVerified) {
+    /* =========================
+       منع إعادة الإرسال
+    ========================= */
+
+    if (otpVerified) {
+        return;
+    }
+
+
+    /* =========================
+       التحقق من رقم الهاتف
+    ========================= */
+
+    const phone = phoneInput.value.trim();
+
+    if (!phone || phone.length < 9) {
 
         phoneError.textContent =
-            'يرجى تأكيد رقم الهاتف أولاً';
+            'الرجاء إدخال رقم الهاتف بشكل صحيح';
 
         phoneError.style.display = 'block';
 
@@ -2261,10 +2477,12 @@ complaintForm.addEventListener('submit', function(event) {
         return;
     }
 
+    phoneError.style.display = 'none';
 
-    // =========================
-    // التحقق من موضوع الشكوى
-    // =========================
+
+    /* =========================
+       التحقق من موضوع الشكوى
+    ========================= */
 
     if (!complaintInput.value.trim()) {
 
@@ -2274,9 +2492,9 @@ complaintForm.addEventListener('submit', function(event) {
     }
 
 
-    // =========================
-    // التحقق من العنوان
-    // =========================
+    /* =========================
+       التحقق من العنوان
+    ========================= */
 
     if (!adressInput.value.trim()) {
 
@@ -2286,23 +2504,59 @@ complaintForm.addEventListener('submit', function(event) {
     }
 
 
-    // =========================
-    // محاكاة إرسال الطلب
-    // =========================
+    /* =========================
+       التحقق من صحة النموذج
+    ========================= */
 
-    const sendButton = document.getElementById('send');
+    if (!complaintForm.checkValidity()) {
+
+        complaintForm.reportValidity();
+
+        return;
+    }
+
+
+    /* =========================
+       تجهيز زر الإرسال
+    ========================= */
+
+    const sendButton =
+        document.getElementById('send');
 
     sendButton.disabled = true;
-    sendButton.value = 'جاري الإرسال...';
+    sendButton.value = 'جاري إرسال رمز التحقق...';
 
 
-    // محاكاة انتظار الـ API
-    setTimeout(function() {
+    /* =========================
+       إرسال OTP
+    ========================= */
 
-        // توليد رقم شكوى تجريبي
-        showComplaintSuccess();
+    console.log('Send OTP to:', phone);
 
-    }, 1200);
+
+    /*
+     * لاحقاً:
+     *
+     * POST /api/send-otp
+     *
+     * {
+     *     phone: phone
+     * }
+     */
+
+
+    /*
+     * حالياً محاكاة API
+     */
+
+    setTimeout(function () {
+
+        sendButton.disabled = false;
+        sendButton.value = 'إرسال';
+
+        openOtpModal();
+
+    }, 600);
 
 });
 
