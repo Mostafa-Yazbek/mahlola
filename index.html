@@ -1204,6 +1204,294 @@ body.service-intro-open {
     position: relative;
     top: 7px;
 }
+/* =========================================
+   SUCCESS MODAL CARD
+========================================= */
+
+.success-modal-panel {
+    position: relative;
+    z-index: 2;
+
+    width: min(460px, 100%);
+
+    padding: 20px 0 15px;
+
+    color: #122510;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(188, 163, 117, 0.8);
+    border-radius: 18px;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.30);
+
+    text-align: center;
+
+    overflow: hidden;
+
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+
+    transition:
+        transform 0.28s ease,
+        opacity 0.28s ease;
+}
+
+
+/* =========================================
+   حركة ظهور الكارت
+========================================= */
+
+.success-modal.show .success-modal-panel {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+
+/* =========================================
+   أيقونة النجاح
+========================================= */
+
+.success-icon1 {
+    display: grid;
+
+    width: 68px;
+    height: 68px;
+
+    place-items: center;
+
+    margin: 0 auto 18px;
+
+    color: #edebe0;
+
+    background: #054239;
+
+    border: 6px solid #edf5f2;
+
+    border-radius: 50%;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 32px;
+    font-weight: bold;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   النص الصغير
+========================================= */
+
+.success-eyebrow {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #054239;
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   العنوان الرئيسي
+========================================= */
+
+.success-title {
+    margin: 0 20px 8px;
+
+    color: #054239;
+
+    font-family: inherit;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   الوصف
+========================================= */
+
+.success-description {
+    margin: 0 25px 25px;
+
+    color: #66716f;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 400;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   رقم الشكوى
+========================================= */
+
+.complaint-number {
+    width: 100%;
+
+    padding: 16px 20px 18px;
+
+    box-sizing: border-box;
+
+    background: #f7f4ee;
+
+    text-align: center;
+}
+
+
+/* عنوان رقم الشكوى */
+
+.complaint-number span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #8a9996;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* الرقم */
+
+.complaint-number strong {
+    display: block;
+
+    color: #054239;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    direction: ltr;
+}
+
+
+/* =========================================
+   زر الإغلاق
+========================================= */
+
+.success-modal-close-btn {
+    display: block;
+
+    width: 112px;
+    height: 44px;
+
+    margin: 24px auto 0;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #054239;
+    color: #edebe0;
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.success-modal-close-btn:hover {
+    background: #032d27;
+
+    transform: translateY(-1px);
+}
+
+
+.success-modal-close-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   موبايل
+========================================= */
+
+@media (max-width: 600px) {
+
+    .success-modal {
+        padding: 15px;
+    }
+
+    .success-modal-panel {
+        width: 100%;
+
+        padding-top: 30px;
+
+        border-radius: 16px;
+    }
+
+    .success-icon1 {
+        width: 62px;
+        height: 62px;
+
+        margin-bottom: 16px;
+
+        font-size: 29px;
+    }
+
+    .success-eyebrow {
+        font-size: 14px;
+    }
+
+    .success-title {
+        font-size: 21px;
+    }
+
+    .success-description {
+        margin-left: 18px;
+        margin-right: 18px;
+
+        font-size: 13px;
+    }
+
+    .complaint-number {
+        padding: 15px 15px 17px;
+    }
+
+    .complaint-number strong {
+        font-size: 18px;
+    }
+
+    .success-modal-close-btn {
+        width: 110px;
+        height: 43px;
+
+        margin-top: 22px;
+
+        font-size: 15px;
+    }
+}
+
 </style>
 <script src="comp.js?v13" defer></script>
 
@@ -1255,16 +1543,20 @@ body.service-intro-open {
 
     <div class="phone-confirm-wrapper">
 
-        <input
-            placeholder="09........ رقم هاتف واتساب للتواصل "
-            id="phone"
-            type="tel"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            required
+        <input 
+            placeholder="09........ رقم هاتف واتساب للتواصل" 
+            id="phone" 
+            type="tel" 
+            inputmode="numeric" 
+            pattern="[0-9]{10}" 
+            maxlength="10"
+            required 
             autocomplete="off"
-            oninvalid="this.setCustomValidity('يرجى إدخال رقم الهاتف')"
-            oninput="this.setCustomValidity('')"
+            oninput="
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+                this.setCustomValidity('');
+            "
+            oninvalid="this.setCustomValidity('يرجى إدخال رقم الهاتف المكون من 10 أرقام')"
         >
 
     </div>
@@ -1424,33 +1716,39 @@ body.service-intro-open {
 
     <div class="success-modal-panel">
 
-        <button
-            type="button"
-            class="success-close"
-            id="successCloseBtn">
-            ×
-        </button>
-
-        <div class="success-icon">
+        <div class="success-icon1" aria-hidden="true">
             ✓
         </div>
 
+        <!-- النص الصغير -->
+        <span class="success-eyebrow">
+            تم استلام شكواك
+        </span>
+
+        <!-- العنوان -->
         <div class="success-title">
-            تم إرسال الطلب بنجاح
+            تم إرسال الشكوى بنجاح
         </div>
 
+        <!-- الوصف -->
         <div class="success-description">
-            تم استلام شكواك بنجاح وسيتم متابعة الطلب من قبل الجهة المختصة.
+            سيتم مراجعة شكواك من قبل الجهة المختصة.
         </div>
 
-        <div class="complaint-number-label">
-            رقم الشكوى
+        <!-- رقم الشكوى -->
+        <div class="complaint-number">
+            <span>رقم الشكوى</span>
+
+            <strong id="complaintNumber"></strong>
         </div>
 
-        <div
-            id="complaintNumber"
-            class="complaint-number">
-        </div>
+        <!-- زر الإغلاق -->
+        <button
+            type="button"
+            class="success-modal-close-btn"
+            id="successCloseBtn">
+            إغلاق
+        </button>
 
     </div>
 
